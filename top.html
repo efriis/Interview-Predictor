@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Interview Predictor - Exeter Admissions</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<style>
+	.affix {
+		top:50px;
+	}
+	.affix-top {
+		position:absolute;
+		top:230px;
+	}
+	.schedulebox {
+		position:absolute;
+		margin:4px;
+		background-color:#EFEFEF;
+		border-radius:4px;
+		border:1px solid #D0D0D0;
+		width:100px;
+		overflow:hidden;
+		display:block;
+	}
+
+	.schedulebox label {
+		float:left;
+		width:inherit;
+		height:inherit;
+		-moz-user-select: -moz-none;
+	   -khtml-user-select: none;
+	   -webkit-user-select: none;
+	   -ms-user-select: none;
+	   user-select: none;
+	}
+
+	.schedulebox label span {
+		height:inherit;
+		display:block;
+		height:inherit;
+		font-size:11pt;
+		font-weight:normal;
+		line-height:100%;
+		padding-top:0px;
+		padding-bottom:0px;
+	}
+	.schedulebox label span + small {
+		margin:-5px 0;
+	}
+
+
+	.schedulebox label input {
+		position:absolute;
+		top:-20px;
+	}
+
+	.schedulebox input:checked + span {
+		color:#000;
+
+	}
+
+	.btn-format-A,.color-format-A {
+		background-color:#FE8080 !important;
+	}
+	.btn-format-A:hover, .btn-format-A:focus {
+		background-color:#E57373 !important;
+	}
+	.btn-format-B,.color-format-B {
+		background-color:#FFE080 !important;
+	}
+	.btn-format-B:hover, .btn-format-B:focus {
+		background-color:#E6CA73 !important;
+	}
+	.btn-format-C,.color-format-C {
+		background-color:#C8E8A7 !important;
+	}
+	.btn-format-C:hover, .btn-format-C:focus {
+		background-color:#B4D196 !important;
+	}
+	.btn-format-D,.color-format-D {
+		background-color:#80D8F8 !important;
+	}
+	.btn-format-D:hover, .btn-format-D:focus {
+		background-color:#73C2DF !important;
+	}
+	.btn-format-E,.color-format-E {
+		background-color:#FFFF80 !important;
+	}
+	.btn-format-E:hover, .btn-format-E:focus {
+		background-color:#E6E673 !important;
+	}
+	.btn-format-F,.color-format-F {
+		background-color:#B898D0 !important;
+	}
+	.btn-format-F:hover, .btn-format-F:focus {
+		background-color:#A689BB !important;
+	}
+	.btn-format-G,.color-format-G {
+		background-color:#80B8E0 !important;
+	}
+	.btn-format-G:hover, .btn-format-G:focus {
+		background-color:#73A6CA !important;
+	}
+	.btn-format-H,.color-format-H {
+		background-color:#E08080 !important;
+	}
+	.btn-format-H:hover, .btn-format-H:focus {
+		background-color:#CA7373 !important;
+	}
+	.btn-format-none,.color-format-none {
+		background-color:#E8E8E8 !important;
+	}
+	.btn-format-none:hover, .btn-format-H:focus {
+		background-color:#D1D1D1 !important;
+	}
+	.btn-panel {
+		color:#1C1C1C;
+		border-color:#B2B2B2;
+	}
+
+	.format_A input:checked + span {
+		background: repeating-linear-gradient(
+		  -45deg,
+		  #FE8080,
+		  #FE8080 10px,
+		  #FE0000 10px,
+		  #FE0000 20px
+		);
+	}
+	.format_B input:checked + span {
+		background: repeating-linear-gradient(
+		  45deg,
+		  #FFE080,
+		  #FFE080 10px,
+		  #FFC000 10px,
+		  #FFC000 20px
+		);
+	}
+	.format_C input:checked + span {
+		background: repeating-linear-gradient(
+		  -45deg,
+		  #C8E8A7,
+		  #C8E8A7 10px,
+		  #92D14F 10px,
+		  #92D14F 20px
+		);
+	}
+	.format_D input:checked + span {
+		background: repeating-linear-gradient(
+		  45deg,
+		  #80D8F8,
+		  #80D8F8 10px,
+		  #01B0F1 10px,
+		  #01B0F1 20px
+		);
+	}
+	.format_E input:checked + span {
+		background: repeating-linear-gradient(
+		  -45deg,
+		  #FFFF80,
+		  #FFFF80 10px,
+		  #CCCC00 10px,
+		  #CCCC00 20px
+		);
+	}
+	.format_F input:checked + span {
+		background: repeating-linear-gradient(
+		  45deg,
+		  #B898D0,
+		  #B898D0 10px,
+		  #7030A0 10px,
+		  #7030A0 20px
+		);
+	}
+	.format_G input:checked + span {
+		background: repeating-linear-gradient(
+		  45deg,
+		  #80B8E0,
+		  #80B8E0 10px,
+		  #0071C1 10px,
+		  #0071C1 20px
+		);
+	}
+	.format_H input:checked + span {
+		background: repeating-linear-gradient(
+		  -45deg,
+		  #E08080,
+		  #E08080 10px,
+		  #C00000 10px,
+		  #C00000 20px
+		);
+	}
+	.format_none input:checked + span {
+		background: repeating-linear-gradient(
+		  90deg,
+		  #E8E8E8,
+		  #E8E8E8 10px,
+		  #B2B2B2 10px,
+		  #B2B2B2 20px
+		);
+	}
+	.format_A input:not(:checked) + span {
+		background-color:#FE8080;
+	}
+	.format_B input:not(:checked) + span {
+		background-color:#FFE080;
+	}
+	.format_C input:not(:checked) + span {
+		background-color:#C8E8A7;
+	}
+	.format_D input:not(:checked) + span {
+		background-color:#80D8F8;
+	}
+	.format_E input:not(:checked) + span {
+		background-color:#FFFF80;
+	}
+	.format_F input:not(:checked) + span {
+		background-color:#B898D0;
+	}
+	.format_G input:not(:checked) + span {
+		background-color:#80B8E0;
+	}
+	.format_H input:not(:checked) + span {
+		background-color:#E08080;
+	}
+	.format_none input:not(:checked) + span {
+		background-color:#E8E8E8;
+	}
+
+
+	.schedulecontainer {
+		position:relative;
+		height:600px;
+
+	}
+
+	.littlefont {
+		font-size:8pt;
+	}
+
+	.navbar-default {
+		background-color: #941100;
+		border-color: #780c00;
+	}
+	.navbar-default .navbar-brand {
+		color: #ebebeb;
+	}
+	.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+		color: #ffffff;
+	}
+	.navbar-default .navbar-text {
+		color: #ebebeb;
+	}
+	.navbar-default .navbar-nav > li > a {
+		color: #ebebeb;
+	}
+	.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+		color: #ffffff;
+	}
+	.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+		color: #ffffff;
+		background-color: #780c00;
+	}
+	.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+		color: #ffffff;
+		background-color: #780c00;
+	}
+	.navbar-default .navbar-toggle {
+		border-color: #780c00;
+	}
+	.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+		background-color: #780c00;
+	}
+	.navbar-default .navbar-toggle .icon-bar {
+		background-color: #ebebeb;
+	}
+	.navbar-default .navbar-collapse,
+	.navbar-default .navbar-form {
+		border-color: #ebebeb;
+	}
+	.navbar-default .navbar-link {
+		color: #ebebeb;
+	}
+	.navbar-default .navbar-link:hover {
+		color: #ffffff;
+	}
+
+	.btn-exeter {
+		color: #fff;
+		background-color: #941100;
+		border-color: #780c00;
+	}
+	.btn-exeter:hover,.btn-exeter:focus,.btn-exeter:active,.btn-exeter.active {
+		background-color:#780c00;
+		color:#fff;
+	}
+	#login_box {
+		padding-left:15px;
+		padding-right:15px;
+		padding-bottom:40px;
+		width:300px;
+	}
+	.dashcol {
+		display:table-cell;
+	}
+	.disabledbox {
+		background-color:gray !important;
+		color:white;
+	}
+	#tour_guide {
+		background-color:yellow !important;
+	}
+	#tour_guide:hover,#tour_guide:focus,#tour_guide:active {
+		background-color:red !important;
+	}
+	.imgdiv {
+		width:40%;
+		padding:10px 10px 10px 10px;
+	}
+	@media (max-width: 767px) {
+		.imgdiv {
+			width:100%;
+			padding:0px 0px 0px 0px;
+		}
+		.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+			color: #ebebeb;
+		}
+		.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+			color: #ffffff;
+		}
+		.navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+			color: #ffffff;
+			background-color: #780c00;
+		}
+		#login_box {
+			color:#ebebeb;
+		}
+		.btn-exeter.btn-change {
+			background-color:#fff;
+			border-color:#ccc;
+			color:#333;
+		}
+		.btn-exeter:hover,.btn-exeter:focus,.btn-exeter:active,.btn-exeter.active {
+			background-color:#e6e6e6;
+			border-color:#adadad;
+			color:#333;
+		}
+		#login_box {
+			width:100%;
+		}
+		.dashcol {
+			display:none !important;
+		}
+	}
+	.first {
+		border-top:solid #606060 3px;
+	}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<meta id="viewport_meta" name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1,user-scalable=0">
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+</head>
+<body>
+	<div class="container">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+					<a class="navbar-brand" href="//exeteradmissions.com">Exeter Admissions</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="//exeteradmissions.com">Homepage</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Guide Login <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<form id="login_box" action="//exeteradmissions.com/login.php" method="post">
+									<li>
+										<div class="form-group">
+											<label for="login_email">Exeter E-Mail</label>
+											<input type="text" name="login_email" id="login_email" class="form-control" placeholder="Exeter Email"/>
+										</div>
+									</li>
+									<li>
+										<div class="form-group">
+											<label for="login_password">Password</label>
+											<input type="password" name="login_password" id="login_password" class="form-control" placeholder="Password"/>
+										</div>
+									</li>
+									<li>
+										<div class="form-inline">
+											<button class="btn btn-exeter btn-change col-xs-12" type="submit" name="submit" value="submit">Log In</button>
+										</div>
+									</li>
+								</form>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="row">
